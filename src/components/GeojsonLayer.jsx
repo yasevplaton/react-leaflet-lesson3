@@ -13,6 +13,24 @@ export default class GeojsonLayer extends React.Component {
     console.log('contructor');
   }
 
+  styleFeature = feature => {
+    if (feature.geometry.type === "LineString") {
+      return {
+        dashArray: '10',
+        color: "#000000",
+        weight: 2
+      };
+    } else {
+      return {
+        fill: true,
+        fillColor: "#ff1ffb",
+        fillOpacity: 0.2,
+        color: "#000000",
+        weight: 1
+      };
+    }
+  }
+
   render() {
     console.log('render');
 
@@ -20,7 +38,7 @@ export default class GeojsonLayer extends React.Component {
     return (
       <FeatureGroup>
         {this.state.data.map(f => {
-          return <GeoJSON key={f.properties.id} data={f}>
+          return <GeoJSON key={f.properties.id} data={f} style={this.styleFeature(f)}>
              <Popup>{f.properties.name}</Popup>
           </GeoJSON>
         })}
