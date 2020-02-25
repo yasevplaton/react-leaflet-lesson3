@@ -116,7 +116,7 @@ class MapComponent extends React.Component {
 
         <div className="geojson-toggle">
           <label htmlFor="layertoggle">Toggle Geojson </label>
-          <inputd
+          <input
             type="checkbox"
             name="layertoggle"
             id="layertoggle"
