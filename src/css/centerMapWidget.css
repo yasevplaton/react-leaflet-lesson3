@@ -1,0 +1,10 @@
+.centerMapForm {
+  position: absolute;
+  border-radius: 3px;
+  bottom: 40px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}

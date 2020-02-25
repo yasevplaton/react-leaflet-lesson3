@@ -4,6 +4,7 @@ import { Map, TileLayer, Marker, Popup } from "react-leaflet";
 import Basemap from "./Basemaps";
 import GeojsonLayer from "./GeojsonLayer";
 import "../css/Map.css";
+import CenterMapWidget from "./centerMapWidget";
 
 // указываем путь к файлам marker
 // L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
@@ -75,9 +76,28 @@ class MapComponent extends React.Component {
     });
   };
 
+  onCenterLatChange = lat => {
+    try {
+      this.setState({
+        lat: lat
+      });
+    } catch (error) {
+      alert("You must enter only valid numbers");
+    }
+  };
+
+  onCenterLngChange = lng => {
+    try {
+      this.setState({
+        lng: lng
+      });
+    } catch (error) {
+      alert("You must enter only valid numbers");
+    }
+  };
+
   render() {
     const circleIcon = L.divIcon({ className: "my-div-icon" });
-    var center = [this.state.lat, this.state.lng];
 
     const basemapsDict = {
       osm: "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
@@ -87,7 +107,7 @@ class MapComponent extends React.Component {
     };
 
     return (
-      <Map zoom={this.state.zoom} center={center}>
+      <Map zoom={this.state.zoom} center={[this.state.lat, this.state.lng]}>
         <TileLayer
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url={basemapsDict[this.state.basemap]}
@@ -96,7 +116,7 @@ class MapComponent extends React.Component {
 
         <div className="geojson-toggle">
           <label htmlFor="layertoggle">Toggle Geojson </label>
-          <input
+          <inputd
             type="checkbox"
             name="layertoggle"
             id="layertoggle"
@@ -105,11 +125,22 @@ class MapComponent extends React.Component {
           />
         </div>
 
+        <CenterMapWidget
+          lat={this.state.lat}
+          lng={this.state.lng}
+          onLatChange={this.onCenterLatChange}
+          onLngChange={this.onCenterLngChange}
+        />
+
         {this.state.geojsonvisible && <GeojsonLayer url="geojson.json" />}
 
         {this.state.markers.map(f => {
           return (
-            <Marker position={[f.coordinates[1], f.coordinates[0]]} key={f.id} icon={circleIcon}>
+            <Marker
+              position={[f.coordinates[1], f.coordinates[0]]}
+              key={f.id}
+              icon={circleIcon}
+            >
               <Popup>{f.id}</Popup>
             </Marker>
           );
