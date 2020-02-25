@@ -11,3 +11,10 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.my-div-icon {
+  width: 4px;
+  height: 4px;
+  background: red;
+  border-radius: 50%;
+}
