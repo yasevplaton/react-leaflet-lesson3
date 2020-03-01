@@ -1,10 +1,11 @@
 import React from "react";
 import L from "leaflet";
 import { Map, TileLayer, Marker, Popup } from "react-leaflet";
-import Basemap from "./Basemaps";
+// import Basemap from "./Basemaps";
 import GeojsonLayer from "./GeojsonLayer";
 import "../css/Map.css";
 import CenterMapWidget from "./centerMapWidget";
+import BasemapGeojsonModal from "./BasemapGeojsonModal";
 
 // указываем путь к файлам marker
 // L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
@@ -93,6 +94,13 @@ class MapComponent extends React.Component {
     }
   };
 
+  onBmGjToogle = (bm, geojsonVisible) => {
+    this.setState({
+      basemap: bm,
+      geojsonvisible: geojsonVisible,
+    });
+  };
+
   render() {
     const circleIcon = L.divIcon({ className: "my-div-icon" });
 
@@ -109,9 +117,9 @@ class MapComponent extends React.Component {
           attribution='&amp;copy <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
           url={basemapsDict[this.state.basemap]}
         />
-        <Basemap basemap={this.state.basemap} onChange={this.onBMChange} />
+        {/* <Basemap basemap={this.state.basemap} onChange={this.onBMChange} /> */}
 
-        <div className="geojson-toggle">
+        {/* <div className="geojson-toggle">
           <label htmlFor="layertoggle">Toggle Geojson </label>
           <input
             type="checkbox"
@@ -120,7 +128,7 @@ class MapComponent extends React.Component {
             value={this.state.geojsonvisible}
             onChange={this.onGeojsonToggle}
           />
-        </div>
+        </div> */}
 
         <CenterMapWidget
           lat={this.state.lat}
@@ -128,6 +136,8 @@ class MapComponent extends React.Component {
           onLatChange={this.onCenterLatChange}
           onLngChange={this.onCenterLngChange}
         />
+
+        <BasemapGeojsonModal onBmGjToogle={this.onBmGjToogle}/>
 
         {this.state.geojsonvisible && <GeojsonLayer url="geojson.json" />}
 
