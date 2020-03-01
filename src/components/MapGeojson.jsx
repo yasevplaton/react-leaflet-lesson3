@@ -9,9 +9,6 @@ import CenterMapWidget from "./centerMapWidget";
 // указываем путь к файлам marker
 // L.Icon.Default.imagePath = "https://unpkg.com/leaflet@1.5.0/dist/images/";
 
-// you can set .my-div-icon styles in CSS
-// L.marker([50.505, 30.57], {icon: myIcon}).addTo(map);
-
 class MapComponent extends React.Component {
   state = {
     lat: 55.702868,
